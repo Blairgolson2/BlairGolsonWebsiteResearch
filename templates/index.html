@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block title %}Research Library — Pain &amp; Mind-Body Medicine{% endblock %}
+
+{% block content %}
+
+<!-- ── Hero ──────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <h1>Pain &amp; Mind-Body Research Library</h1>
+    <p class="hero-subtitle">
+      {% if not db_empty and articles %}
+        {{ articles|length }} peer-reviewed studies on chronic pain, placebo effects, and psychological interventions
+      {% else %}
+        Peer-reviewed studies on chronic pain, placebo effects, and psychological interventions
+      {% endif %}
+    </p>
+
+    <div class="query-mode-toggle" role="group" aria-label="Query mode">
+      <button class="mode-btn mode-btn--active" id="mode-search" aria-pressed="true">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+      <button class="mode-btn" id="mode-ask" aria-pressed="false">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Ask AI
+      </button>
+    </div>
+
+    <div class="search-wrapper" role="search">
+      <label for="search-input" class="sr-only">Search or ask a question</label>
+      <input
+        id="search-input"
+        type="search"
+        class="search-input"
+        placeholder="Search across all studies… (try "placebo", "RCT", "fibromyalgia")"
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <button class="search-btn" id="search-btn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    {% if not db_empty and stats %}
+    <div class="hero-stats">
+      <span>{{ articles|length }} articles</span>
+      <span class="stat-divider">·</span>
+      <span>{{ "{:,}".format(stats.total_citations or 0) }} total citations</span>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- ── Search results panel (hidden until search) ────────────────────── -->
+<div id="search-results" class="search-results-panel hidden" role="region" aria-label="Search results" aria-live="polite">
+  <div class="container">
+    <div id="search-results-inner"></div>
+  </div>
+</div>
+
+<!-- ── Ask AI panel (hidden until question asked) ─────────────────────── -->
+<div id="ask-panel" class="ask-panel hidden" role="region" aria-label="AI answer" aria-live="polite">
+  <div class="container">
+    <div id="ask-loading" class="ask-loading">
+      <div class="ask-spinner"></div>
+      <span>Finding relevant passages…</span>
+    </div>
+    <div id="ask-error" class="ask-error hidden" role="alert">
+      <span id="ask-error-msg"></span>
+    </div>
+    <div id="ask-sources" class="ask-sources hidden">
+      <div class="ask-sources-label">Sources</div>
+      <div id="ask-sources-list" class="ask-sources-list"></div>
+    </div>
+    <div id="ask-answer-wrap" class="ask-answer-wrap hidden">
+      <div class="ask-answer-label">Answer</div>
+      <div id="ask-answer-text" class="ask-answer-text"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main content ───────────────────────────────────────────────────── -->
+<section class="library-section">
+  <div class="container">
+
+    {% if db_empty %}
+    <!-- Setup state -->
+    <div class="setup-box">
+      <div class="setup-icon">📚</div>
+      <h2>Welcome to the Research Library</h2>
+      <p>No articles have been ingested yet. Add your PDFs to the <code>pdfs/</code> folder, then run the ingestion script to get started.</p>
+      <div class="code-block">python ingest.py</div>
+      <p class="setup-hint">This processes each PDF, generates AI summaries using Claude Haiku, and fetches citation counts from Semantic Scholar.</p>
+    </div>
+
+    {% elif not articles %}
+    <div class="setup-box">
+      <div class="setup-icon">📂</div>
+      <h2>No articles found</h2>
+      <p>The database exists but contains no articles. Run the ingestion script:</p>
+      <div class="code-block">python ingest.py</div>
+    </div>
+
+    {% else %}
+    <!-- Article grid -->
+    <div class="articles-grid" id="articles-grid">
+      {% for article in articles %}
+      <article class="article-card" data-id="{{ article.id }}">
+        <div class="card-badges">
+          {% if article.citation_count is not none %}
+            {% if article.citation_count > 0 %}
+            <span class="badge badge-amber" title="Citation count from Semantic Scholar">
+              ★ {{ "{:,}".format(article.citation_count) }} citation{{ 's' if article.citation_count != 1 else '' }}
+            </span>
+            {% else %}
+            <span class="badge badge-gray">☆ 0 citations</span>
+            {% endif %}
+          {% else %}
+          <span class="badge badge-gray">citations N/A</span>
+          {% endif %}
+
+          {% if article.year %}
+          <span class="badge badge-outline">{{ article.year }}</span>
+          {% endif %}
+        </div>
+
+        <h2 class="card-title">
+          <a href="/article/{{ article.id }}">{{ article.title }}</a>
+        </h2>
+
+        {% set authors = article.authors|fromjson %}
+        {% if authors %}
+        <p class="card-authors">
+          {% if authors|length <= 3 %}
+            {{ authors|join(', ') }}
+          {% else %}
+            {{ authors[:3]|join(', ') }}, et al.
+          {% endif %}
+        </p>
+        {% endif %}
+
+        {% if article.journal %}
+        <p class="card-journal">{{ article.journal }}</p>
+        {% endif %}
+
+        {% if article.summary %}
+        <p class="card-summary">
+          {{ article.summary[:260] }}{% if article.summary|length > 260 %}…{% endif %}
+        </p>
+        {% endif %}
+
+        <div class="card-footer">
+          <a href="/article/{{ article.id }}" class="btn btn-primary">View Article</a>
+          <a href="/pdfs/{{ article.filename|urlencode_path }}" target="_blank" rel="noopener" class="btn btn-ghost" title="Open PDF in new tab">
+            PDF&nbsp;
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </a>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

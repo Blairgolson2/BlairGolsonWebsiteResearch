@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% set authors = article.authors|fromjson %}
+
+{% block title %}{{ article.title }} — Research Library{% endblock %}
+
+{% block content %}
+<div class="article-detail">
+  <div class="container">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">← Back to Library</a>
+    </nav>
+
+    <!-- Article header card -->
+    <div class="detail-header">
+      <div class="detail-badges">
+        {% if article.year %}
+        <span class="badge badge-outline">{{ article.year }}</span>
+        {% endif %}
+        {% if article.journal %}
+        <span class="badge badge-outline">{{ article.journal }}</span>
+        {% endif %}
+      </div>
+
+      <h1 class="detail-title">{{ article.title }}</h1>
+
+      {% if authors %}
+      <p class="detail-authors">{{ authors|join(' · ') }}</p>
+      {% endif %}
+
+      <!-- Citation count -->
+      <div class="detail-citation-block">
+        {% if article.citation_count is not none %}
+          {% if article.citation_count > 0 %}
+          <div class="citation-display">
+            <span class="citation-star">★</span>
+            <span class="citation-number">{{ "{:,}".format(article.citation_count) }}</span>
+            <span class="citation-label">citation{{ 's' if article.citation_count != 1 else '' }} on Semantic Scholar</span>
+          </div>
+          {% else %}
+          <div class="citation-display citation-display--zero">
+            <span class="citation-star">☆</span>
+            <span class="citation-number">0</span>
+            <span class="citation-label">citations found on Semantic Scholar</span>
+          </div>
+          {% endif %}
+        {% else %}
+        <div class="citation-display citation-display--unknown">
+          <span class="citation-label">Citation count not available</span>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Action buttons -->
+      <div class="detail-actions">
+        <a href="/pdfs/{{ article.filename|urlencode_path }}" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:6px">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          Open PDF
+        </a>
+        <a href="/" class="btn btn-ghost">Browse All Articles</a>
+      </div>
+    </div>
+
+    <!-- AI Summary -->
+    {% if article.summary %}
+    <section class="detail-card" aria-labelledby="summary-heading">
+      <div class="detail-card-label" id="summary-heading">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+        AI-Generated Summary
+        <span class="ai-model-tag">Claude Haiku</span>
+      </div>
+      <div class="summary-body">
+        {{ article.summary|nl2p }}
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- Embedded PDF viewer -->
+    <section class="detail-card detail-card--pdf" aria-label="PDF viewer">
+      <div class="pdf-toolbar">
+        <span class="detail-card-label" style="margin-bottom:0">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          Full Paper
+        </span>
+        <a href="/pdfs/{{ article.filename|urlencode_path }}" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">
+          Open in new tab ↗
+        </a>
+      </div>
+      <iframe
+        class="pdf-frame"
+        src="/pdfs/{{ article.filename|urlencode_path }}"
+        title="{{ article.title }}"
+        loading="lazy"
+      ></iframe>
+    </section>
+
+  </div>
+</div>
+{% endblock %}
