@@ -186,7 +186,7 @@
   const askAnswerWrap  = document.getElementById("ask-answer-wrap");
   const askAnswerText  = document.getElementById("ask-answer-text");
 
-  let currentMode = "search";
+  let currentMode = "ask";
   let currentAbort = null;
   let answerBuffer = "";
 
@@ -382,5 +382,6 @@
       searchInput.blur();
     }
   }, true);
-
+// Set default mode on initial page load:
+setMode("ask");
 })();
