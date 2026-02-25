@@ -196,7 +196,8 @@
     if (str == null) return "";
     return String(str)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   // ── Panel state ────────────────────────────────────────
@@ -340,11 +341,13 @@
     btnAsk.setAttribute("aria-pressed",    mode === "ask");
 
     if (mode === "search") {
-      searchInput.placeholder = "Search across all studies… (try \\u201cplacebo\\u201d, \\u201cRCT\\u201d, \\u201cfibromyalgia\\u201d)";
+      // Set a simple placeholder without encoded quotes to avoid stray characters
+      searchInput.placeholder = "Search across all studies… (try placebo, RCT, fibromyalgia)";
       searchBtn.setAttribute("aria-label", "Search");
       hideAskPanel();
     } else {
-      searchInput.placeholder = "Ask a question\\u2026 (e.g. \\u201cWhat is the nocebo effect?\\u201d)";
+      // Use plain quotes in the example question to avoid garbage characters
+      searchInput.placeholder = "Ask a question... (e.g. 'What is the nocebo effect?')";
       searchBtn.setAttribute("aria-label", "Ask AI");
       searchResultsPanel.classList.add("hidden");
     }
