@@ -524,3 +524,68 @@ img, svg { display: block; }
     justify-content: flex-start;
   }
 }
+/* === Custom palette inspired by BlairGolson.com === */
+:root {
+  --bg-cream: #fdfaf1;        /* same as --ast-global-color-5 on the site:contentReference[oaicite:1]{index=1} */
+  --text-dark: #343f1e;       /* dark olive used for headings and body:contentReference[oaicite:2]{index=2} */
+  --primary-green: #5c8607;   /* accent colour from the site:contentReference[oaicite:3]{index=3} */
+  --secondary-green: #70a309; /* secondary accent colour:contentReference[oaicite:4]{index=4} */
+}
+
+/* Global typography */
+body {
+  background-color: var(--bg-cream);
+  color: var(--text-dark);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Marcellus', serif;
+  color: var(--text-dark);
+  margin-top: 0;
+  margin-bottom: 0.6em;
+}
+a {
+  color: var(--primary-green);
+}
+a:hover {
+  color: var(--secondary-green);
+}
+
+/* Override the research library hero and search container */
+.hero {
+  background: none;
+  padding: 3rem 1rem;
+}
+.query-search-group {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 1rem;
+}
+.search-wrapper input {
+  background: var(--bg-cream);
+  border: 1px solid #ccc;
+  color: var(--text-dark);
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 30px;
+}
+.search-wrapper input::placeholder {
+  color: rgba(52,63,30,0.6);
+}
+.mode-btn {
+  background-color: var(--primary-green);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.mode-btn:not(.mode-btn--active) {
+  background-color: var(--secondary-green);
+}
+.mode-btn--active {
+  box-shadow: 0 0 0 2px var(--secondary-green) inset;
+}
