@@ -10,10 +10,16 @@
   <div class="container">
     <h1>Search the Science of Chronic Pain—Intelligently</h1>
     <p class="hero-subtitle">
+      {#
+        Replace the original subtitle with a more descriptive message. When articles are present,
+        include the count dynamically; otherwise omit the count. This phrasing explains that
+        users can ask questions about the peer‑reviewed studies and receive AI‑generated answers,
+        with optional keyword search available.
+      #}
       {% if not db_empty and articles %}
-        {{ articles|length }} Peer-reviewed studies carefully selected for their relevance to the brain-based chronic pain approaches I use in practice.
+        Ask questions about {{ articles|length }} peer-reviewed studies on brain-based chronic pain and receive AI-generated answers informed by the referenced research, with optional keyword search available.
       {% else %}
-        Peer-reviewed studies carefully selected for their relevance to the brain-based chronic pain approaches I use in practice.
+        Ask questions about peer-reviewed studies on brain-based chronic pain and receive AI-generated answers informed by the referenced research, with optional keyword search available.
       {% endif %}
     </p>
 
