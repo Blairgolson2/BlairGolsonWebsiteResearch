@@ -2,6 +2,7 @@
    Research Library — Stylesheet
    ========================================================= */
 
+
 /* ── Design tokens ──────────────────────────────────────── */
 :root {
   --navy:         #1a3155;
@@ -26,6 +27,7 @@
   --transition:   .18s ease;
 }
 
+
 /* ── Reset ──────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; scroll-behavior: smooth; }
@@ -45,8 +47,10 @@ img, svg { display: block; }
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 
+
 /* ── Layout ─────────────────────────────────────────────── */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
 
 /* ── Header ─────────────────────────────────────────────── */
 .site-header {
@@ -70,6 +74,7 @@ img, svg { display: block; }
   text-decoration: none; transition: color var(--transition);
 }
 .site-nav a:hover { color: #fff; }
+
 
 /* ── Hero ───────────────────────────────────────────────── */
 .hero {
@@ -96,6 +101,7 @@ img, svg { display: block; }
 }
 .stat-divider { opacity: .4; }
 
+
 /* ── Search bar ─────────────────────────────────────────── */
 .search-wrapper {
   display: flex; max-width: 640px; margin: 0 auto;
@@ -120,6 +126,7 @@ img, svg { display: block; }
 }
 .search-btn:hover { background: var(--blue-hover); }
 
+
 /* ── Search results panel ───────────────────────────────── */
 .search-results-panel {
   background: var(--card);
@@ -127,6 +134,7 @@ img, svg { display: block; }
   padding: 28px 0;
 }
 .search-results-panel.hidden { display: none; }
+
 
 .search-results-header {
   font-size: .83rem; color: var(--muted); margin-bottom: 16px;
@@ -165,8 +173,10 @@ img, svg { display: block; }
   color: var(--muted); font-size: .9rem;
 }
 
+
 /* ── Library grid section ───────────────────────────────── */
 .library-section { padding: 44px 0 72px; }
+
 
 .articles-grid {
   display: grid;
@@ -175,6 +185,7 @@ img, svg { display: block; }
 }
 @media (max-width: 980px) { .articles-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 580px)  { .articles-grid { grid-template-columns: 1fr; } }
+
 
 /* ── Article card ───────────────────────────────────────── */
 .article-card {
@@ -192,9 +203,11 @@ img, svg { display: block; }
   border-color: var(--border);
 }
 
+
 .card-badges {
   display: flex; flex-wrap: wrap; gap: 7px; align-items: center;
 }
+
 
 /* ── Badges ─────────────────────────────────────────────── */
 .badge {
@@ -210,12 +223,14 @@ img, svg { display: block; }
 .badge-gray  { background: #f1f5f9; color: var(--muted); border: 1px solid var(--border); }
 .badge-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
 
+
 .card-title {
   font-size: 1rem; font-weight: 600;
   color: var(--navy); line-height: 1.4;
 }
 .card-title a { color: inherit; text-decoration: none; }
 .card-title a:hover { color: var(--blue); text-decoration: underline; }
+
 
 .card-authors { font-size: .78rem; color: var(--muted); }
 .card-journal { font-size: .75rem; font-style: italic; color: var(--muted); }
@@ -225,6 +240,7 @@ img, svg { display: block; }
 .card-footer {
   display: flex; gap: 10px; margin-top: 6px; flex-wrap: wrap;
 }
+
 
 /* ── Buttons ────────────────────────────────────────────── */
 .btn {
@@ -245,13 +261,16 @@ img, svg { display: block; }
 }
 .btn-ghost:hover { color: var(--blue); border-color: var(--blue); }
 
+
 /* ── Article detail page ────────────────────────────────── */
 .article-detail { padding: 40px 0 72px; }
+
 
 .breadcrumb {
   font-size: .875rem; color: var(--muted); margin-bottom: 24px;
 }
 .breadcrumb a { color: var(--blue); }
+
 
 .detail-header {
   background: var(--card);
@@ -259,6 +278,7 @@ img, svg { display: block; }
   padding: 36px 40px; margin-bottom: 24px;
 }
 @media (max-width: 600px) { .detail-header { padding: 24px; } }
+
 
 .detail-badges {
   display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
@@ -272,6 +292,7 @@ img, svg { display: block; }
   font-size: .875rem; color: var(--muted);
   margin-bottom: 24px; line-height: 1.6;
 }
+
 
 /* Citation display block */
 .detail-citation-block { margin-bottom: 28px; }
@@ -287,7 +308,9 @@ img, svg { display: block; }
 .citation-number { font-size: 1.6rem; font-weight: 700; line-height: 1; }
 .citation-label { font-size: .8rem; font-weight: 500; }
 
+
 .detail-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
 
 /* Detail section cards */
 .detail-card {
@@ -296,6 +319,7 @@ img, svg { display: block; }
   padding: 32px 40px; margin-bottom: 24px;
 }
 @media (max-width: 600px) { .detail-card { padding: 24px; } }
+
 
 .detail-card-label {
   display: flex; align-items: center; gap: 7px;
@@ -310,11 +334,13 @@ img, svg { display: block; }
   letter-spacing: .04em; text-transform: none; font-weight: 600;
 }
 
+
 .summary-body p {
   font-size: .975rem; color: #374151; line-height: 1.8;
   margin-bottom: 1.2em;
 }
 .summary-body p:last-child { margin-bottom: 0; }
+
 
 /* PDF section */
 .detail-card--pdf { padding: 0; overflow: hidden; }
@@ -326,6 +352,7 @@ img, svg { display: block; }
   width: 100%; height: 720px;
   border: none; display: block;
 }
+
 
 /* ── Setup / empty state ────────────────────────────────── */
 .setup-box {
@@ -346,6 +373,7 @@ img, svg { display: block; }
 }
 .setup-box code { font-family: inherit; background: var(--bg); padding: 2px 6px; border-radius: 4px; }
 
+
 /* ── Footer ─────────────────────────────────────────────── */
 .site-footer {
   background: var(--navy-dark); color: rgba(255,255,255,.45);
@@ -353,8 +381,10 @@ img, svg { display: block; }
 }
 .site-footer strong { color: rgba(255,255,255,.65); font-weight: 500; }
 
+
 /* ── Utilities ──────────────────────────────────────────── */
 .hidden { display: none !important; }
+
 
 /* ── Mode toggle ─────────────────────────────────────────── */
 .query-mode-toggle {
@@ -384,12 +414,14 @@ img, svg { display: block; }
   background: rgba(255,255,255,.92); color: var(--navy-dark);
 }
 
+
 /* ── Ask AI panel ────────────────────────────────────────── */
 .ask-panel {
   background: var(--card);
   border-bottom: 1px solid var(--border);
   padding: 32px 0;
 }
+
 
 .ask-loading {
   display: flex; align-items: center; gap: 12px;
@@ -405,11 +437,13 @@ img, svg { display: block; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+
 .ask-error {
   background: #fef2f2; border: 1px solid #fecaca;
   color: #b91c1c; border-radius: var(--radius-sm);
   padding: 14px 18px; font-size: .875rem;
 }
+
 
 /* Sources */
 .ask-sources { margin-bottom: 28px; }
@@ -453,6 +487,7 @@ img, svg { display: block; }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
+
 /* Answer */
 .ask-answer-label {
   font-size: .7rem; font-weight: 700;
@@ -483,56 +518,15 @@ img, svg { display: block; }
 .ask-answer-text p:first-child { margin-top: 0; }
 .ask-answer-text p:last-child  { margin-bottom: 0; }
 .ask-answer-text strong { font-weight: 600; color: var(--text); }
-.ask-answer-text.streaming::after {
-  content: "▌"; color: var(--blue);
-  animation: blink .8s step-end infinite;
-  margin-left: 1px;
-}
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-
-/* Custom overrides for search layout */
-.query-search-group {
-  flex-wrap: wrap;
-}
-.search-wrapper {
-  max-width: none;
-  margin: 0;
-  flex: 1;
-}
-
-/* Custom overrides for search layout */
-.query-search-group {
-  flex-wrap: wrap;
-}
-.search-wrapper {
-  max-width: none;
-  margin: 0;
-  flex: 1;
-}
-
-/* stack search field and buttons vertically on narrow screens */
-@media (max-width: 600px) {
-  .query-search-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .search-wrapper {
-    margin-bottom: 0.75rem; /* gap between search field and buttons */
-  }
-  .query-mode-toggle {
-    justify-content: flex-start;
-  }
-}
 /* === Custom palette inspired by BlairGolson.com === */
 :root {
-  --bg-cream: #fdfaf1;        /* same as --ast-global-color-5 on the site:contentReference[oaicite:1]{index=1} */
-  --text-dark: #343f1e;       /* dark olive used for headings and body:contentReference[oaicite:2]{index=2} */
-  --primary-green: #5c8607;   /* accent colour from the site:contentReference[oaicite:3]{index=3} */
-  --secondary-green: #70a309; /* secondary accent colour:contentReference[oaicite:4]{index=4} */
+  --bg-cream: #fdfaf1;
+  --text-dark: #343f1e;
+  --primary-green: #5c8607;
+  --secondary-green: #70a309;
 }
 
-/* Global typography */
+/* Global typography overrides to match the site */
 body {
   background-color: var(--bg-cream);
   color: var(--text-dark);
@@ -556,37 +550,40 @@ a:hover {
 .hero {
   background: none;
   padding: 3rem 1rem;
-}/* Align Ask AI and Search buttons vertically with search field on desktop */
-@media (min-width: 600px) {
-  .query-mode-toggle {
-    display: flex;
-    align-items: center;
-     
-  }   .query-mode-toggle .mode-btn {
-    font-size: 1rem;
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
-  }
-
 }
 
+/* Custom overrides for search layout */
 .query-search-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
   background-color: #ffffff;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   padding: 1rem;
 }
+
+.search-wrapper {
+  flex: 1;
+  max-width: none;
+  margin: 0;
+}
 .search-wrapper input {
+  width: 100%;
   background: var(--bg-cream);
   border: 1px solid #ccc;
   color: var(--text-dark);
   padding: 0.6rem 1rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   border-radius: 30px;
 }
 .search-wrapper input::placeholder {
   color: rgba(52,63,30,0.6);
 }
+
+/* Buttons for Ask AI and Search */
 .mode-btn {
   background-color: var(--primary-green);
   color: #fff;
@@ -601,4 +598,30 @@ a:hover {
 }
 .mode-btn--active {
   box-shadow: 0 0 0 2px var(--secondary-green) inset;
+}
+
+/* Desktop alignment: align buttons vertically with search field */
+@media (min-width: 600px) {
+  .query-mode-toggle {
+    display: flex;
+    align-items: center;
+  }
+  .search-wrapper input {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* Mobile layout: stack search field and buttons below on narrow screens */
+@media (max-width: 600px) {
+  .query-search-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-wrapper {
+    margin-bottom: 0.75rem;
+  }
+  .query-mode-toggle {
+    justify-content: flex-start;
+  }
 }
