@@ -35,12 +35,13 @@
     if (!raw) return "";
     // Split on <mark> and </mark>, preserve delimiters
     const parts = raw.split(/(<mark>|<\/mark>)/);
-    let inMark = false;
     let out = "";
     for (const part of parts) {
-      if (part === "<mark>")       { inMark = true;  out += "<mark>"; }
-      else if (part === "</mark>") { inMark = false; out += "</mark>"; }
-      else                         { out += escapeHtml(part); }
+      if (part === "<mark>" || part === "</mark>") {
+        out += part;
+      } else {
+        out += escapeHtml(part);
+      }
     }
     return out;
   }
@@ -52,8 +53,7 @@
   }
 
   function formatCitations(count) {
-    if (count == null) return "";
-    if (count === 0)   return "";
+    if (count == null || count === 0) return "";
     return `<span style="color:var(--amber);font-weight:600">★ ${Number(count).toLocaleString()} citations</span>`;
   }
 
@@ -174,7 +174,7 @@
   const btnSearch    = document.getElementById("mode-search");
   const btnAsk       = document.getElementById("mode-ask");
 
-  if (!searchInput || !btnSearch || !btnAsk) return;
+  if (!searchInput || !searchBtn || !btnSearch || !btnAsk) return;
 
   const searchResultsPanel = document.getElementById("search-results");
   const askPanel       = document.getElementById("ask-panel");
@@ -340,17 +340,21 @@
     btnAsk.setAttribute("aria-pressed",    mode === "ask");
 
     if (mode === "search") {
-      searchInput.placeholder = "Search across all studies… (try \u201cplacebo\u201d, \u201cRCT\u201d, \u201cfibromyalgia\u201d)";
+      searchInput.placeholder = "Search across all studies… (try \\u201cplacebo\\u201d, \\u201cRCT\\u201d, \\u201cfibromyalgia\\u201d)";
       searchBtn.setAttribute("aria-label", "Search");
       hideAskPanel();
     } else {
-      searchInput.placeholder = "Ask a question\u2026 (e.g. \u201cWhat is the nocebo effect?\u201d)";
+      searchInput.placeholder = "Ask a question\\u2026 (e.g. \\u201cWhat is the nocebo effect?\\u201d)";
       searchBtn.setAttribute("aria-label", "Ask AI");
       searchResultsPanel.classList.add("hidden");
     }
 
+    // Clear the input field
     searchInput.value = "";
-    searchInput.focus();
+    // Only focus the input on larger screens to prevent auto-scrolling and the iOS password bar on mobile
+    if (window.innerWidth > 600) {
+      searchInput.focus();
+    }
   }
 
   // ── Event listeners ────────────────────────────────────
@@ -382,6 +386,6 @@
       searchInput.blur();
     }
   }, true);
-// Set default mode on initial page load:
-setMode("ask");
+  // Set default mode on initial page load:
+  setMode("ask");
 })();
