@@ -1,3 +1,52 @@
+
+Screenshot 2026-02-24 at 9.32.08 PM.png
+
+style (1).css
+css
+
+
+index (2).html
+177 lines
+
+html
+
+Make modifications to either the index or the CSS files so that the following changes are enacted on this page (https://blairgolsonwebsiteresearch-production.up.railway.app/). Both buttons at the right of the search field should be shrunk so that they are the same vertical height as the search field, and both buttons should be vertically aligned with the center of the search field.
+
+10:23 PM
+
+View the CSS file
+View the CSS file
+Now I can see the issue. The .query-mode-toggle has margin-bottom: 14px which pushes it down, and the button sizing needs to match the search input height. The search input uses padding: 0.6rem 1rem (from the override), so I need to match the buttons to that exact size and ensure vertical alignment.
+
+
+Viewing file
+Viewing file
+I have enough info. The key issues are:
+
+.query-mode-toggle has margin-bottom: 14px which misaligns it
+The mode buttons need to match the search input height (padding: 0.6rem 1rem)
+The query-mode-toggle needs margin-bottom: 0 and proper align-items: center
+Let me add a targeted fix at the end of the CSS:
+
+
+Ran 2 commands, edited a file, read a file
+Ran 2 commands, edited a file, read a file
+Here's the updated CSS. The changes replace the old @media (min-width: 600px) block at the bottom with a cleaner fix:
+
+margin-bottom: 0 !important on .query-mode-toggle removes the 14px gap that was pushing the buttons out of alignment
+align-self: center ensures the toggle group sits centered relative to the search row
+The button padding (0.6rem 1.1rem) and font-size (0.9rem) now match the search input exactly, so all three elements (input + two buttons) share the same height
+Style
+Code · CSS 
+
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+Style · CSS
+Copy
+
 /* =========================================================
    Research Library — Stylesheet
    ========================================================= */
@@ -626,16 +675,15 @@ a:hover {
   }
 }
 /* desktop fix: align Ask AI and Search buttons with the search field */
-@media (min-width: 600px) {
-  .query-mode-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;  /* small gap between buttons */
-  }
-  .query-mode-toggle .mode-btn {
-    padding: 15px 22px;      /* same top/bottom and left/right padding as search bar */
-    font-size: .975rem;      /* match search bar font size */
-    line-height: 1;          /* keep text vertically centred */
-    border-radius: 30px;     /* same rounded shape as before */
-  }
+.query-mode-toggle {
+  margin-bottom: 0 !important;
+  align-self: center;
 }
+
+.query-mode-toggle .mode-btn {
+  padding: 0.6rem 1.1rem !important;   /* match search input vertical padding */
+  font-size: 0.9rem !important;         /* match search input font size */
+  line-height: 1.4 !important;          /* match search input line-height */
+}
+
+
