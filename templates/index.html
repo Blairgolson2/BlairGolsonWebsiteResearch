@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block title %}Research Library — Pain &amp; Mind-Body Medicine{% endblock %}
@@ -17,37 +16,33 @@
       {% endif %}
     </p>
 
-    {#
-      The query-search-group contains the search input, icon button, and the query mode toggle.  To ensure
-      the Ask AI and Search buttons align vertically with the search field on desktop, the search wrapper
-      is now a flex container and the mode toggle has been moved inside it.  The search input uses
-      flex:1 so it expands to fill available space.  On mobile, CSS can override the flex direction to
-      stack the buttons below the input.
-    #}
-    <div class="query-search-group" style="display:flex; align-items:center; gap:0.75rem; width:100%;">
-      <div class="search-wrapper" role="search" style="flex:1; display:flex; align-items:center; gap:0.5rem;">
-        <label for="search-input" class="sr-only">Search or ask a question</label>
-        <input
-          id="search-input"
-          type="search"
-          class="search-input"
-          placeholder="Search across all studies… (try \"placebo\", \"RCT\", \"fibromyalgia\")"
-          autocomplete="off" autocorrect="off" autocapitalize="off" inputmode="search"
-          spellcheck="false"
-          style="flex:1;"
-        >
-        <button class="search-btn" id="search-btn" aria-label="Search">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-          </svg>
-        </button>
-        <div class="query-mode-toggle" role="group" aria-label="Query mode" style="display:flex; gap:0.5rem;">
-          <button class="mode-btn mode-btn--active" id="mode-ask" aria-pressed="true">Ask AI</button>
-          <button class="mode-btn" id="mode-search" aria-pressed="false">Search</button>
-        </div>
-      </div>
+        <div class="query-search-group" style="display:flex; align-items:center; gap:0.75rem; width:100%;">
+  <div class="search-wrapper" role="search" style="flex:1;">
+    <label for="search-input" class="sr-only">Search or ask a question</label>
+    <input
+      id="search-input"
+      type="search"
+      class="search-input"
+      placeholder="Search across all studies… (try \"placebo\", \"RCT\", \"fibromyalgia\")"
+      autocomplete="off" autocorrect="off" autocapitalize="off" inputmode="search"
+      spellcheck="false"
+      style="width:100%;"
+    >
+    <button class="search-btn" id="search-btn" aria-label="Search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+    </button>
+  </div>
+  <div class="query-mode-toggle" role="group" aria-label="Query mode">
+    <button class="mode-btn mode-btn--active" id="mode-ask" aria-pressed="true">Ask AI</button>
+    <button class="mode-btn" id="mode-search" aria-pressed="false">Search</button>
+  </div>
+</div>
+
+     
     </div>
 
     {% if not db_empty and stats %}
@@ -178,3 +173,4 @@
 </section>
 
 {% endblock %}
+
