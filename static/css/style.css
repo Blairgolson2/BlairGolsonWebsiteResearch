@@ -501,4 +501,26 @@ img, svg { display: block; }
   flex: 1;
 }
 
+/* Custom overrides for search layout */
+.query-search-group {
+  flex-wrap: wrap;
+}
+.search-wrapper {
+  max-width: none;
+  margin: 0;
+  flex: 1;
+}
 
+/* stack search field and buttons vertically on narrow screens */
+@media (max-width: 600px) {
+  .query-search-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-wrapper {
+    margin-bottom: 0.75rem; /* gap between search field and buttons */
+  }
+  .query-mode-toggle {
+    justify-content: flex-start;
+  }
+}
