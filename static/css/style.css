@@ -625,3 +625,17 @@ a:hover {
     justify-content: flex-start;
   }
 }
+/* desktop fix: align Ask AI and Search buttons with the search field */
+@media (min-width: 600px) {
+  .query-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;  /* small gap between buttons */
+  }
+  .query-mode-toggle .mode-btn {
+    padding: 15px 22px;      /* same top/bottom and left/right padding as search bar */
+    font-size: .975rem;      /* match search bar font size */
+    line-height: 1;          /* keep text vertically centred */
+    border-radius: 30px;     /* same rounded shape as before */
+  }
+}
