@@ -683,3 +683,8 @@ a:hover {
     align-items: center;
   }
 }
+/* Make hero subtitle and stats legible on cream background */
+.hero-subtitle,
+.hero-stats {
+  color: var(--text);
+}
