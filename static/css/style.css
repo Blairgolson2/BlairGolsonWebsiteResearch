@@ -1,52 +1,3 @@
-
-Screenshot 2026-02-24 at 9.32.08 PM.png
-
-style (1).css
-css
-
-
-index (2).html
-177 lines
-
-html
-
-Make modifications to either the index or the CSS files so that the following changes are enacted on this page (https://blairgolsonwebsiteresearch-production.up.railway.app/). Both buttons at the right of the search field should be shrunk so that they are the same vertical height as the search field, and both buttons should be vertically aligned with the center of the search field.
-
-10:23 PM
-
-View the CSS file
-View the CSS file
-Now I can see the issue. The .query-mode-toggle has margin-bottom: 14px which pushes it down, and the button sizing needs to match the search input height. The search input uses padding: 0.6rem 1rem (from the override), so I need to match the buttons to that exact size and ensure vertical alignment.
-
-
-Viewing file
-Viewing file
-I have enough info. The key issues are:
-
-.query-mode-toggle has margin-bottom: 14px which misaligns it
-The mode buttons need to match the search input height (padding: 0.6rem 1rem)
-The query-mode-toggle needs margin-bottom: 0 and proper align-items: center
-Let me add a targeted fix at the end of the CSS:
-
-
-Ran 2 commands, edited a file, read a file
-Ran 2 commands, edited a file, read a file
-Here's the updated CSS. The changes replace the old @media (min-width: 600px) block at the bottom with a cleaner fix:
-
-margin-bottom: 0 !important on .query-mode-toggle removes the 14px gap that was pushing the buttons out of alignment
-align-self: center ensures the toggle group sits centered relative to the search row
-The button padding (0.6rem 1.1rem) and font-size (0.9rem) now match the search input exactly, so all three elements (input + two buttons) share the same height
-Style
-Code · CSS 
-
-
-
-
-
-Claude is AI and can make mistakes. Please double-check responses.
-Style · CSS
-Copy
-
 /* =========================================================
    Research Library — Stylesheet
    ========================================================= */
@@ -567,15 +518,61 @@ img, svg { display: block; }
 .ask-answer-text p:first-child { margin-top: 0; }
 .ask-answer-text p:last-child  { margin-bottom: 0; }
 .ask-answer-text strong { font-weight: 600; color: var(--text); }
-/* === Custom palette inspired by BlairGolson.com === */
-:root {
-  --bg-cream: #fdfaf1;
-  --text-dark: #343f1e;
-  --primary-green: #5c8607;
-  --secondary-green: #70a309;
+.ask-answer-text.streaming::after {
+  content: "▌"; color: var(--blue);
+  animation: blink .8s step-end infinite;
+  margin-left: 1px;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+
+
+
+/* Custom overrides for search layout */
+.query-search-group {
+  flex-wrap: wrap;
+}
+.search-wrapper {
+  max-width: none;
+  margin: 0;
+  flex: 1;
 }
 
-/* Global typography overrides to match the site */
+
+/* Custom overrides for search layout */
+.query-search-group {
+  flex-wrap: wrap;
+}
+.search-wrapper {
+  max-width: none;
+  margin: 0;
+  flex: 1;
+}
+
+
+/* stack search field and buttons vertically on narrow screens */
+@media (max-width: 600px) {
+  .query-search-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-wrapper {
+    margin-bottom: 0.75rem; /* gap between search field and buttons */
+  }
+  .query-mode-toggle {
+    justify-content: flex-start;
+  }
+}
+/* === Custom palette inspired by BlairGolson.com === */
+:root {
+  --bg-cream: #fdfaf1;        /* same as --ast-global-color-5 on the site:contentReference[oaicite:1]{index=1} */
+  --text-dark: #343f1e;       /* dark olive used for headings and body:contentReference[oaicite:2]{index=2} */
+  --primary-green: #5c8607;   /* accent colour from the site:contentReference[oaicite:3]{index=3} */
+  --secondary-green: #70a309; /* secondary accent colour:contentReference[oaicite:4]{index=4} */
+}
+
+
+/* Global typography */
 body {
   background-color: var(--bg-cream);
   color: var(--text-dark);
@@ -595,44 +592,44 @@ a:hover {
   color: var(--secondary-green);
 }
 
+
 /* Override the research library hero and search container */
 .hero {
   background: none;
   padding: 3rem 1rem;
+}/* Align Ask AI and Search buttons vertically with search field on desktop */
+@media (min-width: 600px) {
+  .query-mode-toggle {
+    display: flex;
+    align-items: center;
+     
+  }   .query-mode-toggle .mode-btn {
+    font-size: 1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+
+
 }
 
-/* Custom overrides for search layout */
+
 .query-search-group {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-  width: 100%;
   background-color: #ffffff;
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   padding: 1rem;
 }
-
-.search-wrapper {
-  flex: 1;
-  max-width: none;
-  margin: 0;
-}
 .search-wrapper input {
-  width: 100%;
   background: var(--bg-cream);
   border: 1px solid #ccc;
   color: var(--text-dark);
   padding: 0.6rem 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   border-radius: 30px;
 }
 .search-wrapper input::placeholder {
   color: rgba(52,63,30,0.6);
 }
-
-/* Buttons for Ask AI and Search */
 .mode-btn {
   background-color: var(--primary-green);
   color: #fff;
@@ -648,88 +645,3 @@ a:hover {
 .mode-btn--active {
   box-shadow: 0 0 0 2px var(--secondary-green) inset;
 }
-
-/* Desktop alignment: align buttons vertically with search field */
-@media (min-width: 600px) {
-  .query-mode-toggle {
-    display: flex;
-    align-items: center;
-  }
-  .search-wrapper input {
-    font-size: 0.9rem;
-    padding: 0.6rem 1rem;
-  }
-}
-
-/* Mobile layout: stack search field and buttons below on narrow screens */
-@media (max-width: 600px) {
-  .query-search-group {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .search-wrapper {
-    margin-bottom: 0.75rem;
-  }
-  .query-mode-toggle {
-    justify-content: flex-start;
-  }
-}
-/* desktop fix: align Ask AI and Search buttons with the search field */
-.query-mode-toggle {
-  margin-bottom: 0 !important;
-  align-self: center;
-}
-
-.query-mode-toggle .mode-btn {
-  padding: 0.6rem 1.1rem !important;   /* match search input vertical padding */
-  font-size: 0.9rem !important;         /* match search input font size */
-  line-height: 1.4 !important;          /* match search input line-height */
-}
-/* =========================================================
-   Research Library — Stylesheet (final)
-   Based on the original design with minimal overrides to
-   align the mode buttons and restore distinct colours.
-   ========================================================= */
-
-/*
-  This file is derived from the original Style CSS (provided by the user)
-  and includes only the necessary changes to:
-    - Keep the search icon visible.
-    - Distinguish the Ask AI and Search buttons using the existing
-      `.mode-btn` and `.mode-btn--active` classes.
-    - Vertically align the buttons with the search bar on desktop
-      without enlarging them.
-  All other styles (for the hero, cards, badges, etc.) remain unchanged.
-*/
-
-/* Include the entire original stylesheet */
-@import url("Style CSS.txt");
-
-/* Override mode button colours only if needed: the original
-   `.mode-btn` uses semi-transparent dark backgrounds with white text
-   and the active state `.mode-btn--active` is white with dark text.
-   These styles already differentiate the buttons. If your theme
-   defines custom colours, you can override them here. */
-
-/* Example custom colours (uncomment and adjust if desired)
- .query-mode-toggle .mode-btn {
-   background-color: rgba(0,0,0,0.15);
-   color: #fff;
- }
- .query-mode-toggle .mode-btn--active {
-   background-color: #fff;
-   color: var(--navy-dark);
- }
-*/
-
-/* Desktop alignment: remove the extra bottom margin and align the
-   vertical centres of the buttons with the search field.  Only applied
-   on screens wider than 600px. */
-@media (min-width: 600px) {
-  .query-mode-toggle {
-    margin-bottom: 0;
-    display: flex;
-    align-items: center;
-  }
-}
-
