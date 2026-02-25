@@ -556,7 +556,20 @@ a:hover {
 .hero {
   background: none;
   padding: 3rem 1rem;
+}/* Align Ask AI and Search buttons vertically with search field on desktop */
+@media (min-width: 600px) {
+  .query-mode-toggle {
+    display: flex;
+    align-items: center;
+     
+  }   .query-mode-toggle .mode-btn {
+    font-size: 1rem;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+
 }
+
 .query-search-group {
   background-color: #ffffff;
   border-radius: 0.5rem;
