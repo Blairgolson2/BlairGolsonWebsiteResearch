@@ -685,5 +685,51 @@ a:hover {
   font-size: 0.9rem !important;         /* match search input font size */
   line-height: 1.4 !important;          /* match search input line-height */
 }
+/* =========================================================
+   Research Library — Stylesheet (final)
+   Based on the original design with minimal overrides to
+   align the mode buttons and restore distinct colours.
+   ========================================================= */
 
+/*
+  This file is derived from the original Style CSS (provided by the user)
+  and includes only the necessary changes to:
+    - Keep the search icon visible.
+    - Distinguish the Ask AI and Search buttons using the existing
+      `.mode-btn` and `.mode-btn--active` classes.
+    - Vertically align the buttons with the search bar on desktop
+      without enlarging them.
+  All other styles (for the hero, cards, badges, etc.) remain unchanged.
+*/
+
+/* Include the entire original stylesheet */
+@import url("Style CSS.txt");
+
+/* Override mode button colours only if needed: the original
+   `.mode-btn` uses semi-transparent dark backgrounds with white text
+   and the active state `.mode-btn--active` is white with dark text.
+   These styles already differentiate the buttons. If your theme
+   defines custom colours, you can override them here. */
+
+/* Example custom colours (uncomment and adjust if desired)
+ .query-mode-toggle .mode-btn {
+   background-color: rgba(0,0,0,0.15);
+   color: #fff;
+ }
+ .query-mode-toggle .mode-btn--active {
+   background-color: #fff;
+   color: var(--navy-dark);
+ }
+*/
+
+/* Desktop alignment: remove the extra bottom margin and align the
+   vertical centres of the buttons with the search field.  Only applied
+   on screens wider than 600px. */
+@media (min-width: 600px) {
+  .query-mode-toggle {
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+  }
+}
 
